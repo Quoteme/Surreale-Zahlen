@@ -1,0 +1,359 @@
+---
+title: "Vortrag 3: Division von surrealen Zahlen"
+subtitle: "Seminar zur Modelltheorie - surreale Zahlen - Wintersemester 2023/24"
+author: Luca Leon Happel
+output: github_document
+---
+
+```{r setup, include=FALSE}
+# library(knitr)
+# library(reticulate)
+# knitr::knit_engines$set(python = reticulate::eng_python)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## $\boldsymbol{No}$ ist ein Körper
+
+### Recap: Addition und Multiplikation surrealer Zahlen
+
+1. Definition von $\boldsymbol{No}$ als Menge aller Formen $x = \{L|R\}$
+	mit $L, R \subset \boldsymbol{No}$ und $L < R$.
+2. Definition von $a + b = \{a^L + b, a + b^L | a^R + b, a + b^R\}$.
+	- $x^L$ bedeutet: $\forall x^L \in L, \> x = \{L | R\}$
+	- $x^R$ bedeutet: $\forall x^R \in R, \> x = \{L | R\}$
+	- Erste Definition auf 3.A "Addition" (Gonshor, 1986)
+	-  (Florian L)Vortrag 2: Die surrealen Zahlen bilden einen angeordneten Ring[^5]
+3. Definition von $a \cdot b = \{a^L \cdot b + a \cdot b^L - a^L \cdot b^L, a^R \cdot b + a \cdot b^R - a^R \cdot b^R | a^L \cdot b + a \cdot b^R - a^L \cdot b^R, a^R \cdot b + a \cdot b^L - a^R \cdot b^L\}$.
+	- ![Ein lustiges Zitat über die Multiplikation surrealer Zahlen aus "Insel der Zahlen" (Knut)](./Multiplikation.png)
+	- $x^L$ und $x^R$ wie oben.
+	- Zweite Definition auf 3.B "Multiplikation" (Gonshor, 1986)
+	- Vortrag 2 (Florian L): Die surrealen Zahlen bilden einen angeordneten Ring
+4. Definition von $a < b \Leftrightarrow a^R < b \wedge a < b^L$.
+	- $x^L$ und $x^R$ wie oben.
+	- Vortrag 1 (Stefan S): Definition der surrealen Zahlen[^6]
+5. $\boldsymbol{No}$ ist ein geordneter, kommutativer Ring mit Eins
+	- Multiplikative Einheit ist $1 = \{0|\}$
+	- Additive Einheit ist $0 = \{|\}$
+	- Theorem 3.6 (Gonshor, 1986)
+	- Vortrag 2 (Florian L): Die surrealen Zahlen bilden einen angeordneten Ring
+
+### Motivation
+
+1. relle Divisionsalgebra
+
+> **Theorem 2B.5[^1]**.
+> $\mathbb{R}$ and $\mathbb{C}$ are the only finite-dimensional division algebras over $\mathbb{R}$
+> which are commutative and have an identity
+
+> **Theorem 2B.5**.
+> $\mathbb{R}$, $\mathbb{C}$, $\mathbb{H}$ and $\mathbb{O}$ are the only finite-dimensional
+> division algebras over $\mathbb{R}$
+> which are associative and have an identity
+
+(Hatcher: Algebraic Topology)
+
+Interressant: $\boldsymbol{No}$ ist sogar eine **kommutative** und
+**assoziative**, unendlich-dimensionale Division-Algebra über $\mathbb{R}$.
+
+2. Alle georneten, divisiblen abelschen Gruppen sind in $\boldsymbol{No}$ enthalten
+
+> **Theorem 5 (Ehrlich[^2])**.
+> Every divisible ordered abelian group is isomorphic to a
+> recursively defined initial subgroup of $\boldsymbol{No}$
+
+Division auf $\boldsymbol{No}$ zu verstehen, bringt somit mit sich, dass man alle
+divisiblen, geordneten, abelschen Gruppen "versteht".
+
+3. Hyperrelle Zahlen
+
+> **Theorem 4 (Ehrlich[^2])**.
+> Every real-closed ordered field is isomorphic to a recursively defined
+> initial subfield of $\boldsymbol{No}$
+
+Insbesondere wichtig, weil Hyperreelle Zahlen $\mathbb{R}^*$ real-abgeschlossen
+sind. Die "infinitessimale" $\frac{1}{\omega}$ sind somit wirklich infinitesimal.
+Durch Division können wir also zwischen den Größenordnungen der surrealen Zahlen
+"herumhüpfen".
+
+
+### Beispiele für Inverse
+
+1. Ist $\frac{1}{0} \in \boldsymbol{No}$ definiert?
+
+Nein, denn $\boldsymbol{No}$ ist ein Ring nach Vortrag 2.
+Somit $\forall x \in \boldsymbol{No}: x \cdot 0 = 0$.
+
+2. $\frac{1}{2}\cdot 2 = 1$?
+
+Ja! Wurde bereits im letzten Vortrag gezeigt.
+Hier noch ein mal der Beweis:
+
+**Beweis:**
+$$
+\begin{aligned}
+x &= 2 = \{ 1 | \} \\
+y &= \frac{1}{2} = \{ 0 | 1 \} \\
+x\cdot y &= \{ \underbrace{1}_{x^L}\cdot \underbrace{\frac{1}{2}}_y + \underbrace{2}_{x} \cdot \underbrace{0}_{y^L} - \underbrace{1}_x \cdot \underbrace{0}_y, \underbrace{\emptyset}_{\not\exists x^R} |
+\underbrace{\emptyset}_{\not\exists x^R}, 1\cdot \frac{1}{2} + 2\cdot 1 - 1 \} \\
+&= \{ \frac{1}{2} | 1+ \frac{1}{2} \} = 1 
+\end{aligned}
+$$
+
+Hierbei verwenden wir $\{ \frac{1}{2} | 1+ \frac{1}{2} \} = 1$. Das beweisen wir
+aber auch noch kurz:
+
+**Beweis:**
+$$
+\begin{aligned}
+\{\frac{1}{2}, 1+ \frac{1}{2}\} \ge \{0|\} \\
+\Leftrightarrow \\
+\underbrace{x^R}_{1+\frac{1}{2}} \ge \underbrace{\{ 0 | \}}_1 \> \wedge \underbrace{y^L}_0 \le \underbrace{\{ \frac{1}{2} | 1+ \frac{1}{2} \}}_{\frac{1}{2}} \\
+\\
+\{0 |\} \ge \{\frac{1}{2} | 1+\frac{1}{2}\}
+\Leftrightarrow \\ 
+\underbrace{x^R}_{1} \ge \{\frac{1}{2} | 1+\frac{1}{2}\} \wedge \underbrace{y^L}_{\frac{1}{2}} \le \underbrace{\{0|\}}_1 \\
+\end{aligned}
+$$
+
+($x$ steht immer für den Linken Teil, $y$ für den Rechten Teil der Ungleichung)
+
+*Visuell:* ![./TreeHalbe.png](./TreeHalbe.png)
+
+Dies ist allgemein definierbar durch die _Länge_[^3] einer surrealen Zahl, zusammen mit deren Ordnung:
+
+$$
+\text{len}(a) := \min_{b\in \boldsymbol{On}} b\notin \text{dom}(\boldsymbol{On} \xrightarrow{a} \{+,-\})
+$$
+
+3. Gilt $\frac{1}{\omega} \cdot \omega = 1$?
+
+Ja!
+
+**Beweis:**
+
+$$
+\begin{aligned}
+x &= \omega = \{ 1, 2, 3, \dots | \} \overset{\text{Conway S. 12}}{=} \{ 2^n | \} \\
+y &= \frac{1}{\omega} = \{ 0 | 1, 2, 3, \dots \} = \{ 0 | \frac{1}{2^m} \} \\
+\omega \cdot \frac{1}{\omega} &= x \cdot y =
+ \{
+	\underbrace{2^n}_{x^L} \cdot \underbrace{\frac{1}{\omega}}_{y} 
+	+ \underbrace{\underbrace{\omega}_{x} \cdot \underbrace{0}_{y^L} }_0
+	- \underbrace{\underbrace{2^n}_{x^L} \cdot \underbrace{0}_{y^L}}_0,
+	 \underbrace{\emptyset}_{\not\exists x^R} 
+	 | \underbrace{2^n}_{x^L} \cdot \underbrace{\frac{1}{\omega}}_{y}
+	 + \underbrace{\omega}_{x} \cdot \underbrace{\frac{1}{2^m}}_{y^R} 
+	- \underbrace{2^n}_{x^L} \cdot \underbrace{\frac{1}{2^m}}_{y^R},
+	\underbrace{\emptyset}_{\not\exists x^R}
+	\} \\
+&= \{
+	2^n \frac{1}{\omega} 
+	 | 2^n \cdot \frac{1}{\omega}
+	  + \omega \frac{1}{2^m} 
+	  - 2^n \frac{1}{2^m}
+	\}
+\end{aligned}
+$$
+
+Wir gehen nun wieder analog zu dem Beweis von 
+$\{ \frac{1}{2} | 1+ \frac{1}{2} \} = 1$ vor. Diesmal aber mit 
+$\{ 2^n \frac{1}{\omega} | 2^n \cdot \frac{1}{\omega} + \omega \frac{1}{2^m} - 2^n \frac{1}{2^m} \} \overset{!}= \{0 | \} = 1$:
+
+**Beweis:**
+
+$$
+\begin{aligned}
+\{
+	2^n \frac{1}{\omega} 
+	 | 2^n \cdot \frac{1}{\omega}
+	  + \omega \frac{1}{2^m} 
+	  - 2^n \frac{1}{2^m}
+	\}
+\le
+\{ 0 | \}
+\\
+\Leftrightarrow \\
+\underbrace{
+\underbrace{x^R}_{2^n \cdot \frac{1}{\omega} + \omega \frac{1}{2^m} - 2^n \frac{1}{2^m}}
+\ge \underbrace{\{ 0 | \}}_1
+}_{\text{stimmt } \checkmark}
+\wedge
+\underbrace{
+\underbrace{y^L}_0 \le
+\{ 2^n \frac{1}{\omega} | 2^n \cdot \frac{1}{\omega} + \omega \frac{1}{2^m} - 2^n \frac{1}{2^m} \}
+}_{\text{stimmt } \checkmark}
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\{
+	2^n \frac{1}{\omega} 
+	 | 2^n \cdot \frac{1}{\omega}
+	  + \omega \frac{1}{2^m} 
+	  - 2^n \frac{1}{2^m}
+	\}
+\ge
+\{ 0 | \}
+\\
+\Leftrightarrow \\
+\underbrace{
+\underbrace{x^R}_{1} \ge \{
+	2^n \frac{1}{\omega} 
+	 | 2^n \cdot \frac{1}{\omega}
+	  + \omega \frac{1}{2^m} 
+	  - 2^n \frac{1}{2^m}
+	\}
+}_{\text{stimmt } \checkmark, \> (\lambda\frac{1}{\omega} < 1 \forall \lambda \in \mathbb{N})}
+\wedge
+\underbrace{
+\underbrace{y^L}_{\{ 2^n \frac{1}{\omega} |  \}} \le \underbrace{\{ 0 | \}}_1
+}_{\text{stimmt } \checkmark, \> (\lambda\frac{1}{\omega} < 1 \forall \lambda \in \mathbb{N})}
+\end{aligned}
+$$
+
+### Allgemeine Konstruktion von Inversen
+
+#### Definition von $y = \frac{1}{x}$
+
+> **Proposition 1':** Sei $(R, +, -, \cdot , 0, 1)$ ein geordneter Ring. Es gilt
+> $\forall x\in R\smallsetminus \{0\} \exists y \in R: x \cdot y = 1 \Leftrightarrow \forall x \in R_{>0}: \exists y \in R: x \cdot y = 1$.
+>
+> (1', weil dies nicht in den Büchern nummeriert ist.)
+
+**Beweis:** 
+Wenn $x>0$ so ist dies klar. Sei $x<0$, so gilt nach Proposition 1', dass
+$-x>0$ ein Inverses $y'$ hat. Somit gilt $-x \cdot y' = 1$. Weil $(-1)$
+eine Einheit ist, gilt $x \cdot -y' = 1$.
+
+> **Proposition 2'**
+> Sei $x = \{x^L | x^R\} \in \boldsymbol{No}$ mit $x>0$. Dann gilt
+> $x = \{0, x^L | x^R\}$ und $x^L>0$.
+
+**Beweis:**
+Sei $y = \{0, x^L : x^L > 0 | x^R\}$ und $x = \{x^L | x^R\}$. Dann gilt
+$y \le x$ und $x \le y$ analog zu dem Beweis von $\{ \frac{1}{2} | 1+ \frac{1}{2} \} = 1$.
+
+> **Definition 3'[^4]**
+> Sei $x = \{0, x^L | x^R\} \boldsymbol{No}$ mit $x>0$. Wir definieren *doppelt induktiv*
+> $$ y := \big\{ 0, \frac{1+(x^R-x) y^L}{x^R}, \frac{1+(x^L-x) y^R}{x^L} \big|  \frac{1+(x^L-x) y^L}{x^L}, \frac{1+(x^R-x) y^R}{x^R} \big\} $$
+
+$y$ wird sich als Inverses von $x$ herausstellen.
+*doppelt induktiv*, weil sowohl $\frac{1}{x^L}, \frac{1}{x^R}$ und $y^L, y^R$
+verwendet werden. Der Induktionsanfang ist $y = \{0|\}$.
+
+#### Sanity-Check: $y \cdot 3 = 1, \> y = \frac{1}{3}$
+
+##### Definition von $\frac{1}{3}$
+
+Wir definieren
+$$
+\begin{aligned}
+\frac{1}{3} &:= \Bigg\{\frac{1}{4}, \frac{1}{4}+\frac{1}{16}, \frac{1}{4}+\frac{1}{16}+\frac{1}{64}, \dots \Bigg| \frac{1}{2}, \frac{1}{2}-\frac{1}{8}, \dots \Bigg\} \\
+&= \Bigg\{ \frac{1}{4} +\sum_{k=3}^n \frac{1+(-1)^k}{2} \frac{1}{2^k} \Bigg| \frac{1}{2} - \sum_{k=3}^n \frac{1+(-1)^k}{2} \frac{1}{2^k} \Bigg\}
+\end{aligned}
+$$
+
+![Verschiedene Invserse. 3 und $\frac{1}{3}$ sind orange markiert.](VerschiedeneInverse.png)
+
+##### Beweis $y \cdot 3 = 1$
+
+Zuerst prüfen wir, ob Definition 3' das selbe für $y$ liefert. Danach prüfen wir
+ob $y \cdot 3 = 1$ gilt.
+
+_Erstens:_
+
+Wir haben $x=3 = \{0,1,2\} = \{2 | \}$. Wir wenden Definition 3' an um $y$ zu
+definieren:
+
+$$ 
+\begin{aligned}
+y &:= \big\{ 0, \underbrace{\frac{1+(x^R-x) y^L}{\color{orange}{x^R}}}_{\not\exists x^R \Rightarrow \emptyset}, \frac{1+(x^L-x) y^R}{x^L} \big|  \frac{1+(x^L-x) y^L}{x^L}, \underbrace{\frac{1+(x^R-x) y^R}{\color{orange}{x^R}}}_{\not\exists x^R \Rightarrow \emptyset} \big\}
+\\
+&= \big\{ 0, \frac{1+(x^L-x) y^R}{x^L} \big|  \frac{1+(x^L-x) y^L}{x^L} \big\}
+\end{aligned}
+$$
+
+Wir wenden nun die doppelte Induktion mit Induktionsanfang $y = \{0|\}$ an:
+
+$$
+\begin{aligned}
+y &= \{\underset{\color{red}\uparrow}{0}&|&\} & \text{Indiktionsanfang} \\
+  &= \{0 &|& \underset{\color{red}\uparrow}{\frac{1-y^L}{2}} \color{gray}{= \frac{1-0}{2} = \frac{1}{2}} \} & \text{Induktionsschritt 1} \\
+  &= \{0, \underset{\color{red}\uparrow}{\frac{1-y^R}{2}} \color{gray}{= \frac{1- \frac{1}{2}}{2} = \frac{1}{4}} &|& \frac{1}{2} \} & \text{Induktionsschritt 2} \\
+  &= \{0, \frac{1}{4} &|& \frac{1}{2}, \underset{\color{red}\uparrow}{\frac{1-y^L}{2}} \color{gray}{= \frac{1- \frac{1}{4}}{2} = \frac{3}{8}} \} & \text{Induktionsschritt 3} \\
+  &= \{0, \frac{1}{4}, \underset{\color{red}\uparrow}{\frac{1-y^R}{2}} \color{gray}{= \frac{1- \frac{3}{8}}{2} = \frac{5}{16}} &|& \frac{1}{2}, \frac{3}{8} \} & \text{Induktionsschritt 4} \\
+  &\> \vdots \\
+  &= \{0, \frac{1}{4}, \dots &|& \frac{1}{2}, \frac{3}{8}, \dots \} & \text{Induktionsschritt }\infty \\
+\end{aligned}
+$$
+
+_Zweitens:_
+
+Wir prüfen nun, ob $y \cdot 3 = 1$ gilt:
+
+$$
+\begin{aligned}
+x := 3 &= \{0,1,2\} = \{2 | \} \\
+y := \frac{1}{3} &= \{0, \frac{1}{4}, \frac{1}{4}+\frac{1}{16}, \dots | \frac{1}{2}, \frac{1}{2}-\frac{1}{8}, \dots \} \\
+y\cdot x &\overset{\text{def}}=
+\{x^L \cdot y + x \cdot y^L - x^L \cdot y^L, \underbrace{\color{gray}{x^R \cdot y + x \cdot y^R - x^R \cdot y^R}}_{\not\exists x^R} | x^L \cdot y + x \cdot y^R - x^L \cdot y^R, \underbrace{\color{gray}{x^R \cdot y + x \cdot y^L - x^R \cdot y^L}}_{\not\exists x^R} \} \\
+&=
+\{x^L \cdot y + x \cdot y^L - x^L \cdot y^L | x^L \cdot y + x \cdot y^R - x^L \cdot y^R \} & x^L = 2, \> x=3, \> y=\frac{1}{3} \\
+&=
+\{2 \cdot \frac{1}{3} + 3 \cdot y^L - 2 \cdot y^L | 2 \cdot \frac{1}{3} + 3 \cdot y^R - 2 \cdot y^R \} \\
+&=
+\{\frac{2}{3} + 3 \cdot y^L - 2 \cdot y^L | \frac{2}{3} + 3 \cdot y^R - 2 \cdot y^R \} & \boldsymbol{No} \text{ ist ein Ring} \\
+&=
+\{\frac{2}{3} + \cdot y^L | \frac{2}{3} + y^R \}
+\end{aligned}
+$$
+
+Es gilt wegen der uniformität der Addition[^5]
+(egal welchen Repräsentateen wir für $1=\{0|\}$ wählen),
+dass $z := \{\frac{2}{3} + \cdot y^L | \frac{2}{3} + y^R \}-1$ stehts
+$z^L <0$ und $z^R > 0$ gilt. Somit ist $z=0$ und $y \cdot 3 = 1$.
+
+##### Intuition hinter der Formel
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+recursionDepth = 10
+
+yL = np.array([0])
+yR = np.array([])
+
+for i in range(recursionDepth):
+    # nehme das letzte Element v von yL und füge (1 - v)/2 zu yR hinzu
+    yR = np.append(yR, (1 - yL[-1])/2)
+    # nehme das letzte Element v von yR und füge (1 - v)/2 zu yL hinzu
+    yL = np.append(yL, (1 - yR[-1])/2)
+
+# plotte die elemente von yL und yR
+plt.plot(yL, label='$y^L$')
+plt.plot(yR, label='$y^R$')
+plt.plot(np.repeat([1/3], recursionDepth), label='$\\frac{1}{3}$')
+
+# zeige den plot an
+plt.legend()
+plt.show()
+```
+
+#### Allgemeiner Beweis $y \cdot x = 1$
+
+## Theorem 2.7
+
+[^1]: HATCHER, ALLEN. ALGEBRAIC TOPOLOGY. CORNELL UNIVERSITY, 2001, https://pi.math.cornell.edu/~hatcher/AT/ATpage.html. Accessed 4 Nov. 2023.
+
+[^2]: EHRLICH, PHILIP. “THE ABSOLUTE ARITHMETIC CONTINUUM AND THE UNIFICATION OF ALL NUMBERS GREAT AND SMALL.” The Bulletin of Symbolic Logic, vol. 18, no. 1, 2012, pp. 1–45. JSTOR, http://www.jstor.org/stable/41472439. Accessed 4 Nov. 2023.
+
+[^3]: Gonshor, H. (1986). An Introduction to the Theory of Surreal Numbers (London Mathematical Society Lecture Note Series). Cambridge: Cambridge University Press. doi:10.1017/CBO9780511629143
+
+[^4]: Conway, J. H. (1976). *On Numbers and Games*. A K Peters/CRC Press. https://books.google.de/books/about/On_numbers_and_games.html?id=opfuAAAAMAAJ&redir_esc=y
+
+[^5]: Florian L.: Die surrealen Zahlen bilden einen angeordneten Ring, Vortrag 2
+
+[^6]: Stefan S.: Definition der surrealen Zahlen, Vortrag 1
