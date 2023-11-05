@@ -316,6 +316,9 @@ $z^L <0$ und $z^R > 0$ gilt. Somit ist $z=0$ und $y \cdot 3 = 1$.
 
 ##### Intuition hinter der Formel
 
+In dieser Grafik sehen wir, wie sich die obere Schranke $\color{orange}{y^R}$ von
+oben und die untere Schranke $\color{blue}{y^L}$ von unten dem Wert $\color{green}\frac{1}{3}$ annähern.
+
 ```{python}
 import numpy as np
 import matplotlib.pyplot as plt
@@ -332,10 +335,17 @@ for i in range(recursionDepth):
     # nehme das letzte Element v von yR und füge (1 - v)/2 zu yL hinzu
     yL = np.append(yL, (1 - yR[-1])/2)
 
+# setze die Größe der Abbildung
+plt.figure(figsize=(5, 3))
+
 # plotte die elemente von yL und yR
 plt.plot(yL, label='$y^L$')
 plt.plot(yR, label='$y^R$')
 plt.plot(np.repeat([1/3], recursionDepth), label='$\\frac{1}{3}$')
+
+# setze die Beschreibung der x-Achse
+plt.xlabel('Rekursionstiefe')
+plt.tight_layout()
 
 # zeige den plot an
 plt.legend()
@@ -344,7 +354,110 @@ plt.show()
 
 #### Allgemeiner Beweis $y \cdot x = 1$
 
+> **Theorem 10 (Conway[^4], 1976)**. Es gelten folgende Aussagen:
+> 
+> (i)  $xy^L < 1 < xy^R$
+> 
+> (ii) $y\in \boldsymbol{No}$
+> 
+> (iii) $(xy)^L < 1 < (xy)^R$
+> 
+> (iv) $xy = 1$
+
+**Beweis (i):**
+
+$$ y := \big\{ 0, \frac{1+(x^R-x) y^L}{x^R}, \frac{1+(x^L-x) y^R}{x^L} \big|  \frac{1+(x^L-x) y^L}{x^L}, \frac{1+(x^R-x) y^R}{x^R} \big\} $$
+
+Wir haben somit für den $i$-ten Iterationsschritt:
+
+$$
+\begin{aligned}
+y_{i+1} &= \frac{1+(x_i - x) y_i}{x_i} &, \color{gray}{x_i\in\{x_i^R, x_i^L\}, \> y_i\in\{y_i^R, y_i^L\}} \\
+&= \frac{1+(x_i - x) y_i}{x_i} &|\> 1-x\cdot(\dots) \\
+&\Leftrightarrow \\
+1-xy_{i+1} &= 1 - x\frac{1+(x_i - x) y_i}{x_i} \\
+&= 1 - \frac{x + (x_i - x) xy_i}{x_i} &|\> \text{Ausklammern}\\
+&= \frac{x_i - x - (x_i - x) xy_i}{x_i} \\
+&= \frac{1(x_i - x) - (x_i - x) xy_i}{x_i} &| \> \text{Distributivgesetz} \\
+&= (1-xy_{i+1}) \frac{x_i - x}{x_i}
+\end{aligned}
+$$
+
+Somit gilt, wenn $y_i$ (i) erfüllt, so muss es auch für $y_{i+1}$ gelten. Denn
+(i) besagt $1-xy_i^L > 0$ und $1-xy_i^R < 0$ für $y_i$. $\frac{x_i - x}{x_i}>0$
+und es ändert sich somit nichts an der Ungleichung.
+
+**Beweis (ii):**
+
+Wir zeigen, dass $y$ eine surreale Zahl ist. Dazu zeigen wir $y^L < y^R$.
+
+_Induktionsanfang:_
+Für $y=\{0|\}$ ist es klar.
+
+_Induktionsschritt:_
+$$ y := \big\{ 0, \frac{1+(x^R-x) y^L}{x^R}, \frac{1+(x^L-x) y^R}{x^L} \big|  \frac{1+(x^L-x) y^L}{x^L}, \frac{1+(x^R-x) y^R}{x^R} \big\} $$
+Wir müssen nun jedes Paar $y^L < y^R$ zeigen: Siehe dazu \ref{fig:ii_beweis}.
+
+```{r ii_beweis, out.width = "100%", fig.cap = "Explizite Rechnung aus (ii)", echo=FALSE}
+knitr::include_graphics(path = "ii.pdf")
+```
+
+**Beweis (iii) und (iv):**
+
+Die Beweise finden sich in Folgender Grafik \ref{fig:iii_iv_beweis}:
+
+```{r iii_iv_beweis, out.width = "100%", fig.cap = "Explizite Rechnung aus (iii) und (iv)", echo=FALSE}
+knitr::include_graphics(path = "iii-iv.pdf")
+```
+
 ## Theorem 2.7
+
+> **Theorem 2.7 (Mantova, Matunski[^77]).**
+> The class $\boldsymbol{No}$
+> endowed with its ordering $\le$ and the operations $+, -$ and $\cdot$ is a totally ordered Field
+> which contains $\mathbb{R}$ and $\boldsymbol{On}$.
+
+### Erste Hälfte des Beweis:
+
+1. $\boldsymbol{No}$ ist ein Körper haben wir durch die Division und dass $\boldsymbol{No}$ ein Ring ist bereits gezeigt.
+2. Totale Ordnung ($\forall x, y: x\le y \vee y \le x$): Wir haben bereits gezeigt, dass $\boldsymbol{No}$ eine totale Ordnung ist.
+3. $\mathbb{Q} \subset \boldsymbol{No}$:
+	- Weil $\mathbb{Z}$ in $\mathbb{No}$ ist[^6]
+	- Weil alle $x\in\mathbb{No}$ ein Multiplikativ-invserses haben
+	- Weil $\mathbb{No}$ ein Ring ist
+4. $\mathbb{R} \subset \boldsymbol{No}$:
+	- Idee: Für $r\in\mathbb{R}$ wähle $x\in\mathbb{Q}\subset\boldsymbol{No}$ mit $x^L < r < x^R$.
+
+### Nützliches Vorwissen für nächste Woche:
+
+_Valuation:_ Eine Abbildung $|\cdot| : K \to A\cup\{\infty\}$, wobei $K$ ein Körper
+und $A$ eine abelsche Gruppe ist, sodass:
+
+1. $|x| = \infty \Leftrightarrow x = 0$
+2. $|xy| = |x| + |y|$
+3. $|x+y| \ge \max(|x|, |y|)$ mit Gleichheit, wenn $|x| \neq |y|$
+
+_archimedisch äquivalent:_ $a, b\in \boldsymbol{No}$ sind archimedisch äquivalent
+($a\asymp b$), wenn $\exists n\in\mathbb{N}: |a| < n|b| \wedge |b| < n|a|$, wobei
+$|x| := \max\{-x, x\}$.
+
+## Zusatz: Wurzeln ziehen in den surrealen Zahlen
+
+Nach Clive Bach <span style="color: gray">(keine Information zu Ihm auffindbar?)</span>
+gibt ess eine analoge Formel für das Ziehen von Wurzeln in den positiven surrealen Zahlen:
+
+$$
+\sqrt{x} = y = 
+\Bigg\{
+    \sqrt{x^L}, \frac{x+y^Ly^R}{y^L + y^R} |
+    \sqrt{x^R}, \frac{x+y^Ly^{L^*}}{y^L + y^{L^*}},
+                \frac{x+y^Ry^{R^*}}{y^R + y^{R^*}},
+\Bigg\}
+$$
+
+wobei $x^L, x^R$ nicht-negativee Optionen von $x$ sind und
+$y^L, y^{L^*}, y^R, y^{R^*}$ nur die Optionen sind, bei denen der Nenner nicht 
+0 wird.
 
 [^1]: HATCHER, ALLEN. ALGEBRAIC TOPOLOGY. CORNELL UNIVERSITY, 2001, https://pi.math.cornell.edu/~hatcher/AT/ATpage.html. Accessed 4 Nov. 2023.
 
@@ -357,3 +470,5 @@ plt.show()
 [^5]: Florian L.: Die surrealen Zahlen bilden einen angeordneten Ring, Vortrag 2
 
 [^6]: Stefan S.: Definition der surrealen Zahlen, Vortrag 1
+
+[^7]: MANTOVA, MATUSINSKI. 2016. Surreal numbers with derivation, Hardy fields and transseries: a survey https://arxiv.org/abs/1608.03413v2. Accessed 4 Nov. 2023.
